@@ -1,6 +1,5 @@
 ---
 prometheus_version: 2.24.0
-prometheus_checksum: true
 prometheus_binary_local_dir: ''
 prometheus_skip_install: false
 
