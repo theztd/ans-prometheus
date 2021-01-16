@@ -15,6 +15,7 @@
     - prometheus_configure
     - prometheus_install
     - prometheus_run
+  when: prometheus_checksum
 
 - include: install.yml
   become: true
