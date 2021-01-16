@@ -1,5 +1,6 @@
 ---
 prometheus_version: 2.24.0
+ignore_checksum: true
 prometheus_binary_local_dir: ''
 prometheus_skip_install: false
 
@@ -14,6 +15,9 @@ prometheus_storage_retention: "30d"
 # [EXPERIMENTAL] Maximum number of bytes that can be stored for blocks. Units
 # supported: KB, MB, GB, TB, PB.
 prometheus_storage_retention_size: "0"
+
+# Protect home before access
+prometheus_master_protect_home: true
 
 prometheus_config_flags_extra: {}
 # prometheus_config_flags_extra:
