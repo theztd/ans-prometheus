@@ -23,7 +23,6 @@ def test_directories(host, dirs):
     "/opt/prom/etc/rules/ansible_managed.rules",
     "/opt/prom/etc/file_sd/node.yml",
     "/opt/prom/etc/file_sd/docker.yml",
-    "/etc/systemd/system/prometheus.service",
     "/usr/local/bin/prometheus",
     "/usr/local/bin/promtool"
 ])
@@ -31,6 +30,21 @@ def test_files(host, files):
     f = host.file(files)
     assert f.exists
     assert f.is_file
+
+
+@pytest.mark.parametrize('file, content', [
+    ("/etc/systemd/system/prometheus.service",
+     "ReadOnly.*=/etc"),
+    ("/etc/systemd/system/prometheus.service",
+     "enable-feature=promql-at-modifier"),
+    ("/etc/systemd/system/prometheus.service",
+     "enable-feature=remote-write-receiver"),
+])
+def test_file_contents(host, file, content):
+    f = host.file(file)
+    assert f.exists
+    assert f.is_file
+    assert f.contains(content)
 
 
 def test_service(host):

@@ -9,7 +9,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 @pytest.fixture()
 def AnsibleDefaults():
-    with open("../../defaults/main.yml", 'r') as stream:
+    with open("defaults/main.yml", 'r') as stream:
         return yaml.load(stream)
 
 
@@ -31,6 +31,7 @@ def test_directories(host, dirs):
     "/etc/prometheus/prometheus.yml",
     "/etc/prometheus/console_libraries/prom.lib",
     "/etc/prometheus/consoles/prometheus.html",
+    "/etc/prometheus/web.yml",
     "/etc/systemd/system/prometheus.service",
     "/usr/local/bin/prometheus",
     "/usr/local/bin/promtool"
@@ -67,5 +68,6 @@ def test_socket(host):
 
 def test_version(host, AnsibleDefaults):
     version = os.getenv('PROMETHEUS', AnsibleDefaults['prometheus_version'])
-    out = host.run("/usr/local/bin/prometheus --version").stderr
+    run = host.run("/usr/local/bin/prometheus --version")
+    out = run.stdout+run.stderr
     assert "prometheus, version " + version in out
